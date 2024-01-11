@@ -1,45 +1,44 @@
-# Python Chess Engine
+# Chess Game
 
-## Table of contents
-* [General info](#general-info)
-* [Technologies](#technologies)
-* [TODO](#todo)
-* [Instructions](#instructions)
-* [Further development ideas](#further-development-ideas)
+This project is a  implementation of a chess game, written in Python. It consists of two main files: `chessmain.py` and `chessengine.py`. The game has fully functionalities of a chess game, including stalemate, en-passant moves and castling moves. We have also tried to do an mini AI 
+but it worked really bad and we decided not to present it.
+For the developing of this project we are planning to do an ELO rating for every user, and try to 
+do this multiplayer.
+We have also functionalities of undo the move with Z and refresh the game with R.
 
-## General info
-I have been playing chess since primary school and one day I had an idea to implement chess in Python. Then, I came across a tutorial by Eddie Sharick, who made a whole 16 episodes series covering the topic.
-This repository is a result of following his videos,  sometimes coming up with some improvements on my own. Hereby, I highly
-encourage you to visit his YouTube channel and check the whole series by yourself.
+## Contributions
+Barbu Robert - Game mechanics
+Dinu Florin - The flow of the game
+Chipuc Valentin - Game mechanics
 
-[Eddie's YouTube channel](https://www.youtube.com/channel/UCaEohRz5bPHywGBwmR18Qww)
 
-[First episode of "Chess engine in Python"](https://www.youtube.com/watch?v=EnYui0e73Rs&ab_channel=EddieSharick)
+## Main Dificulties
+The main dificulty was working with python because none of us did before, and we were not familiar
+with syntax for clases, indentation, and functions.
+Another dificulty was the animation of the game, we didn't exactly know how this animations works,
+but after some small tutorials on youtube, we figured it out.
+The mechanics of the game also were not easy. Thing like en_passant_moves, pinned pieces, check all valid moves were not piece of cake, but we were two responsibles with mechanics so after some discussions things worked properly. 
 
-## Technologies
-* Python 3.7.8
-* pygame 2.0.1
+Estimated time of the project:
+    We did it during five days, We estimate somewhere around 15-20 working hours, (including documentation for the game and tutorials). We also did a text editor but we decide that the chess game is nicer:)).
 
-## TODO
-- [ ] Cleaning up the code - right now it is really messy.
-- [ ] Using numpy arrays instead of 2d lists.
-- [ ] Stalemate on 3 repeated moves or 50 moves without capture/pawn advancement.
-- [ ] Menu to select player vs player/computer.
-- [ ] Allow dragging pieces.
-- [ ] Resolve ambiguating moves (notation).
 
-## Instructions
-1. Clone this repository.
-2. Select whether you want to play versus computer, against another player locally, or watch the game of engine playing against itself by setting appropriate flags in lines 52 and 53 of `ChessMain.py`.
-3. Run `ChessMain.py`.
-4. Enjoy the game!
 
-#### Sic:
-* Press `z` to undo a move.
-* Press `r` to reset the game.
+## chessmain.py
 
-## Further development ideas
-1. Ordering the moves (ex. looking at checks and/or captures) should make the engine much quicker (because of the alpha-beta pruning).
-2. Keeping track of all the possible moves in a given position, so that after a move is made the engine doesn't have to recalculate all the moves.
-3. Evaluating kings placement on the board (separate in middle game and in the late game).
-4. Book of openings.
+This is the main file that runs the game. It sets up the game board, handles user input, and manages the game state.
+
+## chessengine.py
+
+This file contains the logic for the chess engine. It includes the rules for each piece's movement, checks for check and checkmate conditions, and handles the game's logic.
+
+## technologies
+
+We used pygame for the graphic of the game, none of us was experienced with python, we also did a text editor but something quite simple and we all love to play chess so we decided to do a chess game
+
+## How to Run
+
+To run the game, simply execute the `ChessMain.py` file in a Python environment.
+
+```bash
+python ChessMain.py

@@ -24,7 +24,7 @@ def loadImages():
     """
     pieces = ['wp', 'wR', 'wN', 'wB', 'wK', 'wQ', 'bp', 'bR', 'bN', 'bB', 'bK', 'bQ']
     for piece in pieces:
-        IMAGES[piece] = p.transform.scale(p.image.load("chess/images/" + piece + ".png"), (SQUARE_SIZE, SQUARE_SIZE))
+        IMAGES[piece] = p.transform.scale(p.image.load("images/" + piece + ".png"), (SQUARE_SIZE, SQUARE_SIZE))
 
 
 def main():
@@ -45,9 +45,6 @@ def main():
     square_selected = ()  # no square is selected initially, this will keep track of the last click of the user (tuple(row,col))
     player_clicks = []  # this will keep track of player clicks (two tuples)
     game_over = False
-    ai_thinking = False
-    move_undone = False
-    move_finder_process = None
     move_log_font = p.font.SysFont("Arial", 14, False, False)
 
 
@@ -99,8 +96,6 @@ def main():
                     animate = False
                     game_over = False
                     
-
-        # AI move finder
   
 
         if move_made:
@@ -109,7 +104,7 @@ def main():
             valid_moves = game_state.getValidMoves()
             move_made = False
             animate = False
-            move_undone = False
+
 
         drawGameState(screen, game_state, valid_moves, square_selected)
 
@@ -257,7 +252,7 @@ def animateMove(move, screen, board, clock):
         # draw moving piece
         screen.blit(IMAGES[move.piece_moved], p.Rect(col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
         p.display.flip()
-        clock.tick(60)
+        clock.tick(60) # 60 frames per second
 
 
 if __name__ == "__main__":

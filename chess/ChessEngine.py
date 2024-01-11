@@ -24,18 +24,18 @@ class GameState:
             ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"]]
         self.moveFunctions = {"p": self.getPawnMoves, "R": self.getRookMoves, "N": self.getKnightMoves,
                               "B": self.getBishopMoves, "Q": self.getQueenMoves, "K": self.getKingMoves}
-        self.white_to_move = True
-        self.move_log = []
-        self.white_king_location = (7, 4)
-        self.black_king_location = (0, 4)
-        self.checkmate = False
-        self.stalemate = False
-        self.in_check = False
-        self.pins = []
-        self.checks = []
+        self.white_to_move = True #who's turn is it
+        self.move_log = [] #log of all the moves made
+        self.white_king_location = (7, 4) #keep track of the black king's location
+        self.black_king_location = (0, 4) #keep track of the white king's location
+        self.checkmate = False #check if the game is over
+        self.stalemate = False #check if the game is stalemate
+        self.in_check = False #check if the current player is in check
+        self.pins = [] #squares where the allied pinned piece is and the direction pinned from
+        self.checks = [] 
         self.enpassant_possible = ()  # coordinates for the square where en-passant capture is possible
-        self.enpassant_possible_log = [self.enpassant_possible]
-        self.current_castling_rights = CastleRights(True, True, True, True)
+        self.enpassant_possible_log = [self.enpassant_possible] # stack to keep track of en passant squares
+        self.current_castling_rights = CastleRights(True, True, True, True) # castle rights
         self.castle_rights_log = [CastleRights(self.current_castling_rights.wks, self.current_castling_rights.bks,
                                                self.current_castling_rights.wqs, self.current_castling_rights.bqs)]
 
@@ -56,10 +56,6 @@ class GameState:
 
         # pawn promotion
         if move.is_pawn_promotion:
-            # if not is_AI:
-            #    promoted_piece = input("Promote to Q, R, B, or N:") #take this to UI later
-            #    self.board[move.end_row][move.end_col] = move.piece_moved[0] + promoted_piece
-            # else:
             self.board[move.end_row][move.end_col] = move.piece_moved[0] + "Q"
 
         # enpassant move
@@ -95,9 +91,9 @@ class GameState:
         Undo the last move
         """
         if len(self.move_log) != 0:  # make sure that there is a move to undo
-            move = self.move_log.pop()
-            self.board[move.start_row][move.start_col] = move.piece_moved
-            self.board[move.end_row][move.end_col] = move.piece_captured
+            move = self.move_log.pop() #pop the last move from the move log
+            self.board[move.start_row][move.start_col] = move.piece_moved #put the piece back to the start square
+            self.board[move.end_row][move.end_col] = move.piece_captured #put the captured piece back to the end square
             self.white_to_move = not self.white_to_move  # swap players
             # update the king's position if needed
             if move.piece_moved == "wK":
@@ -107,7 +103,7 @@ class GameState:
             # undo en passant move
             if move.is_enpassant_move:
                 self.board[move.end_row][move.end_col] = "--"  # leave landing square blank
-                self.board[move.start_row][move.end_col] = move.piece_captured
+                self.board[move.start_row][move.end_col] = move.piece_captured # put the captured piece back
 
             self.enpassant_possible_log.pop()
             self.enpassant_possible = self.enpassant_possible_log[-1]
@@ -119,8 +115,8 @@ class GameState:
             # undo the castle move
             if move.is_castle_move:
                 if move.end_col - move.start_col == 2:  # king-side
-                    self.board[move.end_row][move.end_col + 1] = self.board[move.end_row][move.end_col - 1]
-                    self.board[move.end_row][move.end_col - 1] = '--'
+                    self.board[move.end_row][move.end_col + 1] = self.board[move.end_row][move.end_col - 1] # moves the rook back to its original square
+                    self.board[move.end_row][move.end_col - 1] = '--'  
                 else:  # queen-side
                     self.board[move.end_row][move.end_col - 2] = self.board[move.end_row][move.end_col + 1]
                     self.board[move.end_row][move.end_col + 1] = '--'
@@ -624,7 +620,7 @@ class Move:
             else:
                 return self.piece_moved[1] + self.getRankFile(self.end_row, self.end_col)
 
-        # TODO Disambiguating moves
+
 
     def getRankFile(self, row, col):
         return self.cols_to_files[col] + self.rows_to_ranks[row]
